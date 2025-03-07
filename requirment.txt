@@ -1,10 +1,6 @@
-MarkupSafe-3.0.2 boto3-1.37.8 botocore-1.37.8 certifi-2025.1.31 charset-normalizer-3.4.1 einops-0.8.1 encodec-0.1.1 filelock-3.17.0 fsspec-2025.2.0 funcy-2.0 huggingface-hub-0.29.2 idna-3.10 jinja2-3.1.6 jmespath-1.0.1 mpmath-1.3.0 networkx-3.4.2 numpy-2.2.3 packaging-24.2 python-dateutil-2.9.0.post0 pyyaml-6.0.2 regex-2024.11.6 requests-2.32.3 s3transfer-0.11.4 safetensors-0.5.3 scipy-1.15.2 six-1.17.0 suno-bark-0.0.1a0 sympy-1.13.1 tokenizers-0.21.0 torch-2.6.0 torchaudio-2.6.0 tqdm-4.67.1 transformers-4.49.0 typing-extensions-4.12.2 urllib3-2.3.0
 
-
-Babel-2.17.0 TTS-0.22.0 Werkzeug-3.1.3 absl-py-2.1.0 aiohappyeyeballs-2.5.0 aiohttp-3.11.13 aiosignal-1.3.2 annotated-types-0.7.0 anyascii-0.3.2 attrs-25.1.0 audioread-3.0.1 bangla-0.0.2 blinker-1.9.0 blis-1.2.0 bnnumerizer-0.0.2 bnunicodenormalizer-0.1.7 catalogue-2.0.10 cffi-1.17.1 click-8.1.8 cloudpathlib-0.21.0 confection-0.1.5 contourpy-1.3.1 coqpit-0.0.17 cycler-0.12.1 cymem-2.0.11 cython-3.0.12 dateparser-1.1.8 decorator-5.2.1 docopt-0.6.2 flask-3.1.0 fonttools-4.56.0 frozenlist-1.5.0 g2pkk-0.1.2 grpcio-1.70.0 gruut-2.2.3 gruut-ipa-0.13.0 gruut_lang_de-2.0.1 gruut_lang_en-2.0.1 gruut_lang_es-2.0.1 gruut_lang_fr-2.0.2 hangul_romanize-0.1.0 inflect-7.5.0 itsdangerous-2.2.0 jamo-0.4.1 jieba-0.42.1 joblib-1.4.2 jsonlines-1.2.0 kiwisolver-1.4.8 langcodes-3.5.0 language-data-1.3.0 lazy-loader-0.4 librosa-0.10.2.post1 llvmlite-0.44.0 marisa-trie-1.2.1 markdown-3.7 markdown-it-py-3.0.0 matplotlib-3.10.1 mdurl-0.1.2 more_itertools-10.6.0 msgpack-1.1.0 multidict-6.1.0 murmurhash-1.0.12 mutagen-1.47.0 networkx-2.8.8 nltk-3.9.1 num2words-0.5.14 numba-0.61.0 numpy-1.26.4 pandas-1.5.3 pillow-11.1.0 platformdirs-4.3.6 pooch-1.8.2 preshed-3.0.9 propcache-0.3.0 protobuf-6.30.0 psutil-7.0.0 pycparser-2.22 pydantic-2.10.6 pydantic-core-2.27.2 pygments-2.19.1 pynndescent-0.5.13 pyparsing-3.2.1 pypinyin-0.53.0 pysbd-0.3.4 python-crfsuite-0.9.11 pytz-2025.1 rich-13.9.4 scikit-learn-1.6.1 shellingham-1.5.4 smart-open-7.1.0 soundfile-0.13.1 soxr-0.5.0.post1 spacy-3.8.4 spacy-legacy-3.0.12 spacy-loggers-1.0.5 srsly-2.5.1 sudachidict_core-20250129 sudachipy-0.6.10 tensorboard-2.19.0 tensorboard-data-server-0.7.2 thinc-8.3.4 threadpoolctl-3.5.0 trainer-0.0.36 typeguard-4.4.2 typer-0.15.2 tzlocal-5.3.1 umap-learn-0.5.7 unidecode-1.3.8 wasabi-1.1.3 weasel-0.4.1 wrapt-1.17.2 yarl-1.18.3
-
-
-pydub-0.25.1
-speechrecognition
-sounddevice
-Successfully installed sounddevice-0.5.1
+transformers-4.49.0
+TTS-0.22.0
+speechrecognition-3.14.1
+sounddevice-0.5.1
+pyttsx3-2.98
