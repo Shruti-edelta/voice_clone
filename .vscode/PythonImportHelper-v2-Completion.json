@@ -444,12 +444,20 @@
         "documentation": {}
     },
     {
-        "label": "pyttsx3",
+        "label": "torch",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "pyttsx3",
-        "description": "pyttsx3",
-        "detail": "pyttsx3",
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "TTS",
+        "importPath": "TTS.api",
+        "description": "TTS.api",
+        "isExtraImport": true,
+        "detail": "TTS.api",
         "documentation": {}
     },
     {
@@ -3601,30 +3609,30 @@
         "documentation": {}
     },
     {
+        "label": "os.environ['CUDA_VISIBLE_DEVICES']",
+        "kind": 5,
+        "importPath": "clone",
+        "description": "clone",
+        "peekOfCode": "os.environ['CUDA_VISIBLE_DEVICES'] = '2'\nrate, _ = read('bark_voices/speaker/sample.wav')\nprint(\"Sample rate of reference:\", rate)\nos.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nconfig=BarkConfig()\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"",
+        "detail": "clone",
+        "documentation": {}
+    },
+    {
         "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
         "kind": 5,
         "importPath": "clone",
         "description": "clone",
-        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nconfig=BarkConfig()\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nprint(\"Available voices:\", os.listdir(voice_dirs))\nspeaker_id = \"speaker\" \n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nconfig=BarkConfig()\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\noutput_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices\")\nwrite(\"output.wav\",rate,output_dic[\"wav\"])",
         "detail": "clone",
         "documentation": {}
     },
     {
-        "label": "voice_dirs",
-        "kind": 5,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "voice_dirs = \"bark_voices/\"\nprint(\"Available voices:\", os.listdir(voice_dirs))\nspeaker_id = \"speaker\" \n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\noutput_dic=model.synthesize(text,config,speaker_id=speaker_id,voice_dirs=voice_dirs,temperature=0.0)\nwrite(\"output.wav\",rate,output_dic[\"wav\"])",
-        "detail": "clone",
-        "documentation": {}
-    },
-    {
-        "label": "speaker_id",
-        "kind": 5,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "speaker_id = \"speaker\" \n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\noutput_dic=model.synthesize(text,config,speaker_id=speaker_id,voice_dirs=voice_dirs,temperature=0.0)\nwrite(\"output.wav\",rate,output_dic[\"wav\"])",
-        "detail": "clone",
+        "label": "remove_sample_file",
+        "kind": 2,
+        "importPath": "practice",
+        "description": "practice",
+        "peekOfCode": "def remove_sample_file():\n    file_path=\"bark_voices/speaker/my_voice.npz\"\n    if os.path.exists(file_path):\n        os.remove(file_path)\n        print(f\"The file {file_path} has been deleted.\")\n    else:\n        print(f\"The file {file_path} does not exist.\")\ndef listen_for_input():  \n    while True:\n        text=speech_reco()",
+        "detail": "practice",
         "documentation": {}
     },
     {
@@ -3632,7 +3640,7 @@
         "kind": 2,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "def listen_for_input():  \n    while True:\n        text=speech_reco()\n        if text:\n            if text.upper() == \"BREAK\":\n                print(\"Ending the conversation...\")\n                break\n            else:\n                response = auto_answer(text)\n                speak(response)",
+        "peekOfCode": "def listen_for_input():  \n    while True:\n        text=speech_reco()\n        if text:\n            if text.upper() == \"BREAK\":\n                print(\"Ending the conversation...\")\n                break\n            else:\n                text=auto_answer(text)\n                voice_cloning(text)",
         "detail": "practice",
         "documentation": {}
     },
@@ -3641,25 +3649,7 @@
         "kind": 2,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "def speech_reco():\n    global audio\n    recognizer = sr.Recognizer()\n    with sr.Microphone() as source:\n        print(\"wait for noise adjusting...\")\n        recognizer.adjust_for_ambient_noise(source)  #voice handle with threshod value(noise)\n        print(\"Please say something: \")\n        audio = recognizer.listen(source)  # listen to the audio\n        try:\n            g_text = recognizer.recognize_google(audio)     #translate audio to text(google translator)",
-        "detail": "practice",
-        "documentation": {}
-    },
-    {
-        "label": "auto_answer",
-        "kind": 2,
-        "importPath": "practice",
-        "description": "practice",
-        "peekOfCode": "def auto_answer(text):\n    r=subprocess.run(['ollama','run',model,text],capture_output=True,text=True)\n    cleaned_output = re.sub(r'<.*?>','',r.stdout)\n    speech_queue.append(cleaned_output)\n    return cleaned_output.strip()\ndef speak(cleaned_output):\n    print(f\"Responding== {cleaned_output}\")\n    engine.say(cleaned_output)\n    engine.runAndWait()\ndef save_audio():",
-        "detail": "practice",
-        "documentation": {}
-    },
-    {
-        "label": "speak",
-        "kind": 2,
-        "importPath": "practice",
-        "description": "practice",
-        "peekOfCode": "def speak(cleaned_output):\n    print(f\"Responding== {cleaned_output}\")\n    engine.say(cleaned_output)\n    engine.runAndWait()\ndef save_audio():\n    with open(\"bark_voices/speaker/my_voice.wav\", \"wb\") as file:\n        file.write(audio.get_wav_data())\ndef vice_cloning():\n    rate, _ = read('harvard.wav')\n    print(\"Sample rate of reference:\", rate)",
+        "peekOfCode": "def speech_reco():\n    global audio\n    recognizer = sr.Recognizer()\n    with sr.Microphone() as source:\n        print(\"wait for noise adjusting...\")\n        recognizer.adjust_for_ambient_noise(source)  #voice handle with threshod value(noise adjust)\n        print(\"Please say something: \")\n        audio = recognizer.listen(source)\n        save_audio(audio)  # listen to the audio\n        try:",
         "detail": "practice",
         "documentation": {}
     },
@@ -3668,35 +3658,98 @@
         "kind": 2,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "def save_audio():\n    with open(\"bark_voices/speaker/my_voice.wav\", \"wb\") as file:\n        file.write(audio.get_wav_data())\ndef vice_cloning():\n    rate, _ = read('harvard.wav')\n    print(\"Sample rate of reference:\", rate)\n    os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\n    config=BarkConfig()\n    model=Bark.init_from_config(config)\n    model.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)",
+        "peekOfCode": "def save_audio(audio):\n    with open(\"bark_voices/speaker/my_voice.wav\", \"wb\") as file:\n        file.write(audio.get_wav_data())\nos.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\ndef voice_cloning(text):    \n    print(text)\n    remove_sample_file()\n    config=BarkConfig()\n    model=Bark.init_from_config(config)\n    model.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)",
         "detail": "practice",
         "documentation": {}
     },
     {
-        "label": "vice_cloning",
+        "label": "voice_cloning",
         "kind": 2,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "def vice_cloning():\n    rate, _ = read('harvard.wav')\n    print(\"Sample rate of reference:\", rate)\n    os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\n    config=BarkConfig()\n    model=Bark.init_from_config(config)\n    model.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\n    model.to(\"cpu\")\n    voice_dirs = \"bark_voices/\"\n    print(\"Available voices:\", os.listdir(voice_dirs))",
+        "peekOfCode": "def voice_cloning(text):    \n    print(text)\n    remove_sample_file()\n    config=BarkConfig()\n    model=Bark.init_from_config(config)\n    model.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\n    model.to(\"cpu\")\n    # output_dic=model.generate_audio(text)\n    output_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices/\",temperature=0.75,speed=0.9)\n    print(\"ganarated_Audio: \",output_dic)",
         "detail": "practice",
         "documentation": {}
     },
     {
-        "label": "engine",
-        "kind": 5,
+        "label": "auto_answer",
+        "kind": 2,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "engine = pyttsx3.init()\nengine.setProperty('rate', 100)\nvoices=engine.getProperty('voices')\nspeaking=False    \nspeech_queue = []\ndef listen_for_input():  \n    while True:\n        text=speech_reco()\n        if text:\n            if text.upper() == \"BREAK\":",
+        "peekOfCode": "def auto_answer(text):\n    r=subprocess.run(['ollama','run',model,text],capture_output=True,text=True)\n    cleaned_output = re.sub(r'<.*?>','',r.stdout)\n    print(cleaned_output)\n    return cleaned_output.strip()\ndef speak(file_path):\n    rate, data = read(file_path)\n    sd.play(data, rate)\nlisten_for_input()\n# text=\"hello,how r u.what are you doing\"",
         "detail": "practice",
         "documentation": {}
     },
     {
-        "label": "speech_queue",
+        "label": "speak",
+        "kind": 2,
+        "importPath": "practice",
+        "description": "practice",
+        "peekOfCode": "def speak(file_path):\n    rate, data = read(file_path)\n    sd.play(data, rate)\nlisten_for_input()\n# text=\"hello,how r u.what are you doing\"\n# text=auto_answer(text)\n# voice_cloning(text)",
+        "detail": "practice",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
         "kind": 5,
         "importPath": "practice",
         "description": "practice",
-        "peekOfCode": "speech_queue = []\ndef listen_for_input():  \n    while True:\n        text=speech_reco()\n        if text:\n            if text.upper() == \"BREAK\":\n                print(\"Ending the conversation...\")\n                break\n            else:\n                response = auto_answer(text)",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\ndef voice_cloning(text):    \n    print(text)\n    remove_sample_file()\n    config=BarkConfig()\n    model=Bark.init_from_config(config)\n    model.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\n    model.to(\"cpu\")\n    # output_dic=model.generate_audio(text)\n    output_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices/\",temperature=0.75,speed=0.9)",
         "detail": "practice",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"SUNO_OFFLOAD_CPU\"]",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "os.environ[\"SUNO_OFFLOAD_CPU\"] = \"True\"\nos.environ[\"SUNO_USE_SMALL_MODELS\"] = \"True\"\nos.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\n# Get device\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n# List available 🐸TTS models\nprint(TTS().list_models())\n# Init TTS\ntts = TTS(\"tts_models/multilingual/multi-dataset/xtts_v2\").to(device)\n# Run TTS",
+        "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"SUNO_USE_SMALL_MODELS\"]",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "os.environ[\"SUNO_USE_SMALL_MODELS\"] = \"True\"\nos.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\n# Get device\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n# List available 🐸TTS models\nprint(TTS().list_models())\n# Init TTS\ntts = TTS(\"tts_models/multilingual/multi-dataset/xtts_v2\").to(device)\n# Run TTS\n# ❗ Since this model is multi-lingual voice cloning model, we must set the target speaker_wav and language",
+        "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\n# Get device\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n# List available 🐸TTS models\nprint(TTS().list_models())\n# Init TTS\ntts = TTS(\"tts_models/multilingual/multi-dataset/xtts_v2\").to(device)\n# Run TTS\n# ❗ Since this model is multi-lingual voice cloning model, we must set the target speaker_wav and language\n# Text to speech list of amplitude values as output",
+        "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "device",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n# List available 🐸TTS models\nprint(TTS().list_models())\n# Init TTS\ntts = TTS(\"tts_models/multilingual/multi-dataset/xtts_v2\").to(device)\n# Run TTS\n# ❗ Since this model is multi-lingual voice cloning model, we must set the target speaker_wav and language\n# Text to speech list of amplitude values as output\nwav = tts.tts(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\")\n# Text to speech to a file",
+        "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "tts",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "tts = TTS(\"tts_models/multilingual/multi-dataset/xtts_v2\").to(device)\n# Run TTS\n# ❗ Since this model is multi-lingual voice cloning model, we must set the target speaker_wav and language\n# Text to speech list of amplitude values as output\nwav = tts.tts(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\")\n# Text to speech to a file\ntts.tts_to_file(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\", file_path=\"output.wav\")",
+        "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "wav",
+        "kind": 5,
+        "importPath": "practice2",
+        "description": "practice2",
+        "peekOfCode": "wav = tts.tts(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\")\n# Text to speech to a file\ntts.tts_to_file(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\", file_path=\"output.wav\")",
+        "detail": "practice2",
         "documentation": {}
     },
     {

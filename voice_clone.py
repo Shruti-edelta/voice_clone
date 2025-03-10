@@ -18,7 +18,7 @@ def audio(text,preset,output):
 
 text="hello,how are you"
 # text="你好吗"
-text="एक समय की बात है, एक छोटे से प्यारे बिल्ली के बच्चे का नाम था मिलो।"
+# text="एक समय की बात है, एक छोटे से प्यारे बिल्ली के बच्चे का नाम था मिलो।"
 audio(text,preset="v2/hi_speaker_1",output="output.wav")
 
 
