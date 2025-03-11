@@ -417,6 +417,24 @@
         "documentation": {}
     },
     {
+        "label": "soundfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "soundfile",
+        "description": "soundfile",
+        "detail": "soundfile",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
         "label": "speech_recognition",
         "kind": 6,
         "isExtraImport": true,
@@ -444,20 +462,27 @@
         "documentation": {}
     },
     {
-        "label": "torch",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "torch",
-        "description": "torch",
-        "detail": "torch",
-        "documentation": {}
-    },
-    {
         "label": "TTS",
         "importPath": "TTS.api",
         "description": "TTS.api",
         "isExtraImport": true,
         "detail": "TTS.api",
+        "documentation": {}
+    },
+    {
+        "label": "TortoiseConfig",
+        "importPath": "TTS.tts.configs.tortoise_config",
+        "description": "TTS.tts.configs.tortoise_config",
+        "isExtraImport": true,
+        "detail": "TTS.tts.configs.tortoise_config",
+        "documentation": {}
+    },
+    {
+        "label": "Tortoise",
+        "importPath": "TTS.tts.models.tortoise",
+        "description": "TTS.tts.models.tortoise",
+        "isExtraImport": true,
+        "detail": "TTS.tts.models.tortoise",
         "documentation": {}
     },
     {
@@ -3609,20 +3634,29 @@
         "documentation": {}
     },
     {
-        "label": "os.environ['CUDA_VISIBLE_DEVICES']",
-        "kind": 5,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "os.environ['CUDA_VISIBLE_DEVICES'] = '2'\nrate, _ = read('bark_voices/speaker/sample.wav')\nprint(\"Sample rate of reference:\", rate)\nos.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nconfig=BarkConfig()\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"",
-        "detail": "clone",
-        "documentation": {}
-    },
-    {
         "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
         "kind": 5,
         "importPath": "clone",
         "description": "clone",
-        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nconfig=BarkConfig()\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\noutput_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices\")\nwrite(\"output.wav\",rate,output_dic[\"wav\"])",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nwarnings.filterwarnings(\"ignore\")\nnp.set_printoptions(threshold=sys.maxsize)\n# data = read('bark_voices/speaker/sample_randomvoice.wav')\n# print(\"Sample rate of reference:\",data)\nconfig=BarkConfig(SEMANTIC_RATE_HZ=48.6)\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"",
+        "detail": "clone",
+        "documentation": {}
+    },
+    {
+        "label": "text",
+        "kind": 5,
+        "importPath": "clone",
+        "description": "clone",
+        "peekOfCode": "text = \"My name is Darshan Dhameliya\"\noutput_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices/\",temperature=0.1)\noutput_dic[\"wav\"] = output_dic[\"wav\"]\nprint(\"out_dic: \",output_dic)\nwrite(\"output.wav\",25000,output_dic[\"wav\"])\n# from TTS.tts.configs.bark_config import BarkConfig\n# from TTS.tts.models.bark import Bark\n# from scipy.io.wavfile import write\n# import os\n# import warnings",
+        "detail": "clone",
+        "documentation": {}
+    },
+    {
+        "label": "output_dic[\"wav\"]",
+        "kind": 5,
+        "importPath": "clone",
+        "description": "clone",
+        "peekOfCode": "output_dic[\"wav\"] = output_dic[\"wav\"]\nprint(\"out_dic: \",output_dic)\nwrite(\"output.wav\",25000,output_dic[\"wav\"])\n# from TTS.tts.configs.bark_config import BarkConfig\n# from TTS.tts.models.bark import Bark\n# from scipy.io.wavfile import write\n# import os\n# import warnings\n# import torch\n# # torch.manual_seed(42)",
         "detail": "clone",
         "documentation": {}
     },
@@ -3750,6 +3784,33 @@
         "description": "practice2",
         "peekOfCode": "wav = tts.tts(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\")\n# Text to speech to a file\ntts.tts_to_file(text=\"Hello world!\", speaker_wav=\"bark_voices/speaker/my_voice.wav\", language=\"en\", file_path=\"output.wav\")",
         "detail": "practice2",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "turtosoie_model",
+        "description": "turtosoie_model",
+        "peekOfCode": "config = TortoiseConfig()\nmodel = Tortoise.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"tortoise-tts/\", eval=True)\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\n# with random speaker\n# output_dict = model.synthesize(text, config, speaker_id=\"random\", extra_voice_dirs=None)\n# cloning a speaker\noutput_dict = model.synthesize(text, config, speaker_id=\"tortoise-tts/tortoise/voices/myself\", extra_voice_dirs=\"myself/\")",
+        "detail": "turtosoie_model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "turtosoie_model",
+        "description": "turtosoie_model",
+        "peekOfCode": "model = Tortoise.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"tortoise-tts/\", eval=True)\ntext=\"This is a beginning of the history. If you want to hear more, please continue.\"\n# with random speaker\n# output_dict = model.synthesize(text, config, speaker_id=\"random\", extra_voice_dirs=None)\n# cloning a speaker\noutput_dict = model.synthesize(text, config, speaker_id=\"tortoise-tts/tortoise/voices/myself\", extra_voice_dirs=\"myself/\")",
+        "detail": "turtosoie_model",
+        "documentation": {}
+    },
+    {
+        "label": "output_dict",
+        "kind": 5,
+        "importPath": "turtosoie_model",
+        "description": "turtosoie_model",
+        "peekOfCode": "output_dict = model.synthesize(text, config, speaker_id=\"tortoise-tts/tortoise/voices/myself\", extra_voice_dirs=\"myself/\")",
+        "detail": "turtosoie_model",
         "documentation": {}
     },
     {
