@@ -360,6 +360,22 @@
         "documentation": {}
     },
     {
+        "label": "BarkConfig",
+        "importPath": "TTS.tts.configs.bark_config",
+        "description": "TTS.tts.configs.bark_config",
+        "isExtraImport": true,
+        "detail": "TTS.tts.configs.bark_config",
+        "documentation": {}
+    },
+    {
+        "label": "Bark",
+        "importPath": "TTS.tts.models.bark",
+        "description": "TTS.tts.models.bark",
+        "isExtraImport": true,
+        "detail": "TTS.tts.models.bark",
+        "documentation": {}
+    },
+    {
         "label": "Bark",
         "importPath": "TTS.tts.models.bark",
         "description": "TTS.tts.models.bark",
@@ -400,7 +416,23 @@
         "documentation": {}
     },
     {
+        "label": "write",
+        "importPath": "scipy.io.wavfile",
+        "description": "scipy.io.wavfile",
+        "isExtraImport": true,
+        "detail": "scipy.io.wavfile",
+        "documentation": {}
+    },
+    {
         "label": "read",
+        "importPath": "scipy.io.wavfile",
+        "description": "scipy.io.wavfile",
+        "isExtraImport": true,
+        "detail": "scipy.io.wavfile",
+        "documentation": {}
+    },
+    {
+        "label": "write",
         "importPath": "scipy.io.wavfile",
         "description": "scipy.io.wavfile",
         "isExtraImport": true,
@@ -417,12 +449,12 @@
         "documentation": {}
     },
     {
-        "label": "soundfile",
+        "label": "logging",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "soundfile",
-        "description": "soundfile",
-        "detail": "soundfile",
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
         "documentation": {}
     },
     {
@@ -486,28 +518,27 @@
         "documentation": {}
     },
     {
-        "label": "AutoProcessor",
-        "importPath": "transformers",
-        "description": "transformers",
+        "label": "SAMPLE_RATE",
+        "importPath": "bark",
+        "description": "bark",
         "isExtraImport": true,
-        "detail": "transformers",
+        "detail": "bark",
         "documentation": {}
     },
     {
-        "label": "BarkModel",
-        "importPath": "transformers",
-        "description": "transformers",
+        "label": "generate_audio",
+        "importPath": "bark",
+        "description": "bark",
         "isExtraImport": true,
-        "detail": "transformers",
+        "detail": "bark",
         "documentation": {}
     },
     {
-        "label": "scipy",
-        "kind": 6,
+        "label": "preload_models",
+        "importPath": "bark",
+        "description": "bark",
         "isExtraImport": true,
-        "importPath": "scipy",
-        "description": "scipy",
-        "detail": "scipy",
+        "detail": "bark",
         "documentation": {}
     },
     {
@@ -3634,30 +3665,93 @@
         "documentation": {}
     },
     {
+        "label": "split_text",
+        "kind": 2,
+        "importPath": "clone",
+        "description": "clone",
+        "peekOfCode": "def split_text(text, max_length=500):\n    \"\"\"\n    Splits the text into chunks of max_length. Adjust max_length according to model's limitation.\n    \"\"\"\n    words = text.split()\n    chunks = []\n    current_chunk = []\n    print(\"words: \",words)\n    for word in words:\n        print(\" \".join(current_chunk + [word]))",
+        "detail": "clone",
+        "documentation": {}
+    },
+    {
         "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
         "kind": 5,
         "importPath": "clone",
         "description": "clone",
-        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nwarnings.filterwarnings(\"ignore\")\nnp.set_printoptions(threshold=sys.maxsize)\n# data = read('bark_voices/speaker/sample_randomvoice.wav')\n# print(\"Sample rate of reference:\",data)\nconfig=BarkConfig(SEMANTIC_RATE_HZ=48.6)\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\",eval=True)\nmodel.to(\"cpu\")\n# text=\"[laughter] my name is shruti\"",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nwarnings.filterwarnings(\"ignore\")\n# np.set_printoptions(threshold=sys.maxsize) # print all array not display...\nrate,data = read('bark_voices/speaker/LJ037-0171.wav')\nprint(\"Sample rate of reference:\",data)\nconfig=BarkConfig(num_chars=10000,SAMPLE_RATE =rate,SEMANTIC_VOCAB_SIZE=10000,USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.eval()\nmodel.to(\"cpu\")",
         "detail": "clone",
+        "documentation": {}
+    },
+    {
+        "label": "rate,data",
+        "kind": 5,
+        "importPath": "clone",
+        "description": "clone",
+        "peekOfCode": "rate,data = read('bark_voices/speaker/LJ037-0171.wav')\nprint(\"Sample rate of reference:\",data)\nconfig=BarkConfig(num_chars=10000,SAMPLE_RATE =rate,SEMANTIC_VOCAB_SIZE=10000,USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.eval()\nmodel.to(\"cpu\")\ndef split_text(text, max_length=500):\n    \"\"\"\n    Splits the text into chunks of max_length. Adjust max_length according to model's limitation.",
+        "detail": "clone",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
+        "kind": 5,
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nlogging.getLogger(\"TTS\").setLevel(logging.ERROR)\nconfig = BarkConfig()\nmodel = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")",
+        "detail": "p1",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "config = BarkConfig()\nmodel = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)",
+        "detail": "p1",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "model = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "detail": "p1",
+        "documentation": {}
+    },
+    {
+        "label": "voice_dirs",
+        "kind": 5,
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "voice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "detail": "p1",
+        "documentation": {}
+    },
+    {
+        "label": "speaker_id",
+        "kind": 5,
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "speaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "detail": "p1",
         "documentation": {}
     },
     {
         "label": "text",
         "kind": 5,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "text = \"My name is Darshan Dhameliya\"\noutput_dic=model.synthesize(text,config,speaker_id=\"speaker\",voice_dirs=\"bark_voices/\",temperature=0.1)\noutput_dic[\"wav\"] = output_dic[\"wav\"]\nprint(\"out_dic: \",output_dic)\nwrite(\"output.wav\",25000,output_dic[\"wav\"])\n# from TTS.tts.configs.bark_config import BarkConfig\n# from TTS.tts.models.bark import Bark\n# from scipy.io.wavfile import write\n# import os\n# import warnings",
-        "detail": "clone",
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "text = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "detail": "p1",
         "documentation": {}
     },
     {
-        "label": "output_dic[\"wav\"]",
+        "label": "output_dic",
         "kind": 5,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "output_dic[\"wav\"] = output_dic[\"wav\"]\nprint(\"out_dic: \",output_dic)\nwrite(\"output.wav\",25000,output_dic[\"wav\"])\n# from TTS.tts.configs.bark_config import BarkConfig\n# from TTS.tts.models.bark import Bark\n# from scipy.io.wavfile import write\n# import os\n# import warnings\n# import torch\n# # torch.manual_seed(42)",
-        "detail": "clone",
+        "importPath": "p1",
+        "description": "p1",
+        "peekOfCode": "output_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "detail": "p1",
         "documentation": {}
     },
     {
@@ -3814,29 +3908,20 @@
         "documentation": {}
     },
     {
-        "label": "audio",
-        "kind": 2,
+        "label": "text_prompt",
+        "kind": 5,
         "importPath": "voice_clone",
         "description": "voice_clone",
-        "peekOfCode": "def audio(text,preset,output):\n    inputs = processor(text,voice_preset=preset)\n    for k,v in inputs.items():\n        inputs[k]=v.to(\"cpu\")\n    audio_arr=model.generate(**inputs)\n    audio_arr=audio_arr.cpu().numpy().squeeze()\n    sample_rate=model.generation_config.sample_rate\n    scipy.io.wavfile.write(output,rate=sample_rate,data=audio_arr)\ntext=\"hello,how are you\"\n# text=\"你好吗\"",
+        "peekOfCode": "text_prompt = \"\"\"\n     Hello, my name is Suno. And, uh — and I like pizza. [laughs] \n     But I also have other interests such as playing tic tac toe.\n\"\"\"\naudio_array = generate_audio(text_prompt)\n# save audio to disk\nwrite_wav(\"bark_generation.wav\", SAMPLE_RATE, audio_array)",
         "detail": "voice_clone",
         "documentation": {}
     },
     {
-        "label": "os.environ[\"SUNO_OFFLOAD_CPU\"]",
+        "label": "audio_array",
         "kind": 5,
         "importPath": "voice_clone",
         "description": "voice_clone",
-        "peekOfCode": "os.environ[\"SUNO_OFFLOAD_CPU\"] = \"True\"\nos.environ[\"SUNO_USE_SMALL_MODELS\"] = \"True\"\nprocessor=AutoProcessor.from_pretrained(\"suno/bark\")\nmodel=BarkModel.from_pretrained(\"suno/bark\")\nmodel.to(\"cpu\")\ndef audio(text,preset,output):\n    inputs = processor(text,voice_preset=preset)\n    for k,v in inputs.items():\n        inputs[k]=v.to(\"cpu\")\n    audio_arr=model.generate(**inputs)",
-        "detail": "voice_clone",
-        "documentation": {}
-    },
-    {
-        "label": "os.environ[\"SUNO_USE_SMALL_MODELS\"]",
-        "kind": 5,
-        "importPath": "voice_clone",
-        "description": "voice_clone",
-        "peekOfCode": "os.environ[\"SUNO_USE_SMALL_MODELS\"] = \"True\"\nprocessor=AutoProcessor.from_pretrained(\"suno/bark\")\nmodel=BarkModel.from_pretrained(\"suno/bark\")\nmodel.to(\"cpu\")\ndef audio(text,preset,output):\n    inputs = processor(text,voice_preset=preset)\n    for k,v in inputs.items():\n        inputs[k]=v.to(\"cpu\")\n    audio_arr=model.generate(**inputs)\n    audio_arr=audio_arr.cpu().numpy().squeeze()",
+        "peekOfCode": "audio_array = generate_audio(text_prompt)\n# save audio to disk\nwrite_wav(\"bark_generation.wav\", SAMPLE_RATE, audio_array)",
         "detail": "voice_clone",
         "documentation": {}
     }

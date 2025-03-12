@@ -2,62 +2,64 @@ from TTS.tts.configs.bark_config import BarkConfig
 from TTS.tts.models.bark import Bark  #like transformer
 from scipy.io.wavfile import write,read
 import os
-import soundfile as sf
-import numpy as np
 import warnings
-import torch
-import sys
 
 os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'
 warnings.filterwarnings("ignore")
-np.set_printoptions(threshold=sys.maxsize)
+# np.set_printoptions(threshold=sys.maxsize) # print all array not display...
+rate,data = read('bark_voices/speaker/LJ037-0171.wav')
+print("Sample rate of reference:",data)
 
-# data = read('bark_voices/speaker/sample_randomvoice.wav')
-# print("Sample rate of reference:",data)
-
-config=BarkConfig(SEMANTIC_RATE_HZ=48.6)
+config=BarkConfig(num_chars=10000,SAMPLE_RATE =rate,SEMANTIC_VOCAB_SIZE=10000,USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000
 model=Bark.init_from_config(config)
-model.load_checkpoint(config,checkpoint_dir="bark/",eval=True)
+model.load_checkpoint(config,checkpoint_dir="bark/")
+model.eval()
 model.to("cpu")
 
+def split_text(text, max_length=500):
+    """
+    Splits the text into chunks of max_length. Adjust max_length according to model's limitation.
+    """
+    words = text.split()
+    chunks = []
+    current_chunk = []
+    print("words: ",words)
+    for word in words:
+        print(" ".join(current_chunk + [word]))
+        if len(" ".join(current_chunk + [word])) <= max_length:
+            current_chunk.append(word)
+        else:
+            print("===")
+            chunks.append(" ".join(current_chunk))
+            current_chunk = [word]
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+    return chunks
+
+
+# text="This is a beginning of the history."
+# text="This is the size of the vocabulary that the model uses to represent semantic concepts"
+# text="If you find that the output is inconsistent across different runs even with the same settings, you can try saving the generated speech.If you want to hear more, please continue.If you find that the output is inconsistent."
 # text="[laughter] my name is shruti"
-# text="This is a beginning of the history. If you want to hear more, please continue."
-text="This is a beginning of the history."
-text = "My name is Darshan Dhameliya"
+text="Mohandas Karamchand Gandhi was an Indian lawyer anti-colonial nationalist, and political ethicist who employed nonviolent. resistance to lead the successful campaign for India's independence from British rule. He inspired movements for civil rights and freedom across the world. The honorific Mahātmā, first applied to him in South Africa in 1914, is now used throughout the world."
 
-output_dic=model.synthesize(text,config,speaker_id="speaker",voice_dirs="bark_voices/",temperature=0.1)
+# chunks = split_text(text, max_length=500)
+# final_output = []
 
-output_dic["wav"] = output_dic["wav"]
+# for chunk in chunks:
+#     print("sdfsd")
+#     output_dic = model.synthesize(chunk, config, speaker_id="speaker", voice_dirs="bark_voices/", temperature=0.5)
+#     final_output.append(output_dic["wav"])
 
-print("out_dic: ",output_dic)
-write("output.wav",25000,output_dic["wav"])
+# # Concatenate the audio chunks
+# import numpy as np
+# final_audio = np.concatenate(final_output, axis=0)
 
+# write("output.wav", rate, final_audio)
+# print("Final audio shape:", final_audio.shape,final_audio)
 
-# from TTS.tts.configs.bark_config import BarkConfig
-# from TTS.tts.models.bark import Bark
-# from scipy.io.wavfile import write
-# import os
-# import warnings
-# import torch
+output_dic=model.synthesize(text,config,speaker_id="speaker",voice_dirs="bark_voices/",temperature=0.5,max_gen_duration_s=30)
+write("output.wav",24000,output_dic["wav"]) #22050,23000
+print("out_dic: ",output_dic["wav"].shape,output_dic)
+
  
-# # torch.manual_seed(42)
-# warnings.filterwarnings("ignore")
- 
-# os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'
- 
-# # logging.getLogger("TTS").setLevel(logging.ERROR)
- 
-# config = BarkConfig()
-# model = Bark.init_from_config(config)
-# model.load_checkpoint(config, checkpoint_dir="bark/", eval=True)
-# model.to("cpu")
- 
-# voice_dirs = "bark_voices/"
-# speaker_id = "speaker" 
-
-# text = "My name is Darshan Dhameliya"
- 
-# output_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)
-
-# print("out_dic: ",output_dic)
-# write("output.wav", 25000, output_dic["wav"])
