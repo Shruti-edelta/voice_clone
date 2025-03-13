@@ -25,7 +25,7 @@ speaker_id = "speaker"
 if not os.path.exists(voice_dirs):
     raise FileNotFoundError(f"Voice directory '{voice_dirs}' not found!")
  
-text = " [laughs] my good name is darshan dhameliya."
+text = " [laughs] my good name is shruti."
  
 output_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)
  

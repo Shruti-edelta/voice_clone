@@ -168,3 +168,23 @@ Default: get_user_data_dir() (system-specific path)
 29. DEF_SPEAKER_DIR (str) – Default Speaker Directory
 This specifies the directory where the model stores speaker-related information for voice cloning or multi-speaker synthesis.
 Default: get_user_data_dir()
+
+Model	Average Length	Notes
+Bark	~14 seconds	Fixed limit due to context size.
+Tortoise-TTS	~30–60 seconds	More flexible but slower processing.
+Tacotron 2	~10–15 seconds	Context length is model-dependent.
+FastSpeech 2	~30 seconds	Can handle longer audio if GPU allows.
+ 
+
+generate_audio{text_to_semantic=[generate_text_semantic],               ---->first process
+                semantic_to_wavefor=[generate_coarse,generate_fine,codec_decode]}
+
+generate_text_semantic ==> 
+normalize,encoded_text-token,
+encoded_text_padding(256),semantic_history_padding(256),
+tensor_x-(encoded_text,semantic_history,SEMANTIC_INFER_TOKEN)
+x_device (cpu),
+
+
+_normalize_whitespace(text)  i.g "  This   is   some  text. \t\n More  text.   "-->"This is some text. More text."
+

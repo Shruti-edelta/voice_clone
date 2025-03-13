@@ -3665,20 +3665,11 @@
         "documentation": {}
     },
     {
-        "label": "split_text",
-        "kind": 2,
-        "importPath": "clone",
-        "description": "clone",
-        "peekOfCode": "def split_text(text, max_length=500):\n    \"\"\"\n    Splits the text into chunks of max_length. Adjust max_length according to model's limitation.\n    \"\"\"\n    words = text.split()\n    chunks = []\n    current_chunk = []\n    print(\"words: \",words)\n    for word in words:\n        print(\" \".join(current_chunk + [word]))",
-        "detail": "clone",
-        "documentation": {}
-    },
-    {
         "label": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD']",
         "kind": 5,
         "importPath": "clone",
         "description": "clone",
-        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nwarnings.filterwarnings(\"ignore\")\n# np.set_printoptions(threshold=sys.maxsize) # print all array not display...\nrate,data = read('bark_voices/speaker/LJ037-0171.wav')\nprint(\"Sample rate of reference:\",data)\nconfig=BarkConfig(num_chars=10000,SAMPLE_RATE =rate,SEMANTIC_VOCAB_SIZE=10000,USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.eval()\nmodel.to(\"cpu\")",
+        "peekOfCode": "os.environ['TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD'] = '1'\nwarnings.filterwarnings(\"ignore\")\nrate,data = read('bark_voices/speaker/LJ037-0171.wav')\n# np.set_printoptions(threshold=sys.maxsize) # print all array not display...\n# print(\"Sample rate of reference:\",data)\n# SEMANTIC_VOCAB_SIZE N_COARSE_CODEBOOKS\n# config=BarkConfig(num_chars=100,SAMPLE_RATE =rate,\n#                   SEMANTIC_VOCAB_SIZE=10000,\n#                   USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nconfig=BarkConfig(USE_SMALLER_MODELS=True)",
         "detail": "clone",
         "documentation": {}
     },
@@ -3687,7 +3678,7 @@
         "kind": 5,
         "importPath": "clone",
         "description": "clone",
-        "peekOfCode": "rate,data = read('bark_voices/speaker/LJ037-0171.wav')\nprint(\"Sample rate of reference:\",data)\nconfig=BarkConfig(num_chars=10000,SAMPLE_RATE =rate,SEMANTIC_VOCAB_SIZE=10000,USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")\nmodel.eval()\nmodel.to(\"cpu\")\ndef split_text(text, max_length=500):\n    \"\"\"\n    Splits the text into chunks of max_length. Adjust max_length according to model's limitation.",
+        "peekOfCode": "rate,data = read('bark_voices/speaker/LJ037-0171.wav')\n# np.set_printoptions(threshold=sys.maxsize) # print all array not display...\n# print(\"Sample rate of reference:\",data)\n# SEMANTIC_VOCAB_SIZE N_COARSE_CODEBOOKS\n# config=BarkConfig(num_chars=100,SAMPLE_RATE =rate,\n#                   SEMANTIC_VOCAB_SIZE=10000,\n#                   USE_SMALLER_MODELS=True)   #SEMANTIC_VOCAB_SIZE =10000 12000 TEXT_SOS_TOKEN=10,050 7000\nconfig=BarkConfig(USE_SMALLER_MODELS=True)\nmodel=Bark.init_from_config(config)\nmodel.load_checkpoint(config,checkpoint_dir=\"bark/\")",
         "detail": "clone",
         "documentation": {}
     },
@@ -3705,7 +3696,7 @@
         "kind": 5,
         "importPath": "p1",
         "description": "p1",
-        "peekOfCode": "config = BarkConfig()\nmodel = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)",
+        "peekOfCode": "config = BarkConfig()\nmodel = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is shruti.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)",
         "detail": "p1",
         "documentation": {}
     },
@@ -3714,7 +3705,7 @@
         "kind": 5,
         "importPath": "p1",
         "description": "p1",
-        "peekOfCode": "model = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "peekOfCode": "model = Bark.init_from_config(config)\nmodel.load_checkpoint(config, checkpoint_dir=\"bark/\", eval=True)\nmodel.to(\"cpu\")\nvoice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is shruti.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
         "detail": "p1",
         "documentation": {}
     },
@@ -3723,7 +3714,7 @@
         "kind": 5,
         "importPath": "p1",
         "description": "p1",
-        "peekOfCode": "voice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "peekOfCode": "voice_dirs = \"bark_voices/\"\nspeaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is shruti.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
         "detail": "p1",
         "documentation": {}
     },
@@ -3732,7 +3723,7 @@
         "kind": 5,
         "importPath": "p1",
         "description": "p1",
-        "peekOfCode": "speaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "peekOfCode": "speaker_id = \"speaker\"\nif not os.path.exists(voice_dirs):\n    raise FileNotFoundError(f\"Voice directory '{voice_dirs}' not found!\")\ntext = \" [laughs] my good name is shruti.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
         "detail": "p1",
         "documentation": {}
     },
@@ -3741,7 +3732,7 @@
         "kind": 5,
         "importPath": "p1",
         "description": "p1",
-        "peekOfCode": "text = \" [laughs] my good name is darshan dhameliya.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
+        "peekOfCode": "text = \" [laughs] my good name is shruti.\"\noutput_dic = model.synthesize(text, config, speaker_id=speaker_id, voice_dirs=voice_dirs, temperature=0.1, tqdm_disable=True)\nwrite(\"output_07.wav\", 24000, output_dic[\"wav\"])",
         "detail": "p1",
         "documentation": {}
     },
